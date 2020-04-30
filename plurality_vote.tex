@@ -1,0 +1,50 @@
+\documentclass[]{article}
+
+%opening
+\title{}
+\author{}
+\usepackage[colorlinks,urlcolor=blue]{hyperref}
+\usepackage[osf]{mathpazo}
+\usepackage{amsthm,amsmath,amsfonts,graphicx}
+\usepackage{latexsym}
+\usepackage{subfig}
+\usepackage{algpseudocode}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{listings}
+\usepackage{fullpage}
+\usepackage{color}
+
+\begin{document}
+\maketitle
+
+
+\section{Plurality vote}
+
+Assume we have node set $V$ of size n, and a ranking $\sigma:V\rightarrow Z^+$, for any $u,v\in V$, there is a query results $f(x,y)=\sigma_x-\sigma_y +\eta_{x,y}$, where $\eta_{x,y}$ is independent and follow 
+
+\begin{displaymath}
+\eta_{x,y} = \begin{cases}
+0 & \text{w.p. } 1-q\\
+r & \text{w.p. } q/2 \\
+-r & \text{w.p. } q/2
+\end{cases}
+\end{displaymath}  
+
+Plurality vote:
+
+\textbf{Find seed set} Given two sets $S\subseteq V$ and $U\subseteq V$, and $|U|={12(3q^2-4q+1)^2\over 3q^2-4q+2}\log n$,Then for any pair of nodes $s,s^\prime\in S$, $\sigma_s-\sigma_{s^\prime}=Pvote(f(s,u)-f(s^\prime,u):u\in U)$ w.h.p.
+
+Proof: For any pair $(s,s^\prime)$, there are $|U|={12(3q^2-4q+1)^2\over 3q^2-4q+2}\log n$ votes. Let $y_i$ be the indicator random variable that vote i is correct, and $Y=\sum_{i=1}^{|U|}$. We know $Pr[y_i=1]=(1-q)^2+2({q\over 2})^2={3\over 2}q^2-2q+1$, and $E[Y]=({3\over 2}q^2-2q+1)|U|$.
+
+$Pr[Y\leq {|U|\over 2}]=Pr[Y\leq {1\over 2({3\over 2}q^2-2q+1)}E[Y]]$. Let $\delta ={3q^2-4q+1\over 3q^2-4q+2}$, by Chernoff bound, $$Pr[Y\leq {|U|\over 2}]\leq e^{-{\delta^2\over 2}E[Y]}=e^{-|V|{(3q^2-4q+1)^2\over 4(3q^2-4q+2)}}={1\over n^3}$$
+
+\textbf{Vote from seed set}. Given a seed set $S\subseteq V$ such that $|S|={24(1-q)\over (1-2q)^2}\log n$, and node $u\in V\backslash S$, the plurality vote $Pvote(f(u,s)+\sigma_s:s\in S)=\sigma_u$ w.h.p.
+
+Proof: For each node u, there are in total $|S|={24(1-q)\over (1-2q)^2}\log n$ votes. Let $x_i$ be the indicator random variable that vote i is correct, and $X=\sum_{i=1}^{|S|}x_i$. We know $Pr[x_i=1]=1-q$, and $E[X]=(1-q)|S|$.
+
+$Pr[X\leq {1\over 2}|S|]=Pr[X\leq {1\over 2(1-q)}(1-q)|S|]$. Let $\delta ={1-2q\over 2-2q}$, by Chernoff bound,  $$Pr[X\leq {1\over 2}|S|]\leq e^{-{\delta^2\over 2}(1-q)|S|} =e^{-|S|{(1-2q)^2\over 8(1-q)}} ={1\over n^3}$$
+
+
+
+\end{document}
