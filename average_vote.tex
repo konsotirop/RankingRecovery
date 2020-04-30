@@ -1,0 +1,26 @@
+\documentclass[]{article}
+
+%opening
+\title{}
+\author{}
+
+
+\begin{document}
+\maketitle
+
+
+\section{Average vote}
+
+Assume we have node set $V$ of size n, for any $u,v\in V$, there is a query results $q(u,v)=\sigma_u-\sigma_v +z_{u,v}$, where $z_{u,v}$ is independent and follow some distribution with mean $0$ and variance $\theta_{u,v}$.  
+
+Now we have a seed set $S$ of size k, that we already get the ranking of nodes in S.
+
+Algorithm: For a node $u\in V-S$, $$\sigma_u^\prime = (\sum_{v\in S}q(u,v)+\sigma_v)/k = \sigma_u+\sum_{v\in S}z_{u,v}/k$$
+
+If we assume $\sigma_u$ is an integer ranking, then we can  get a correct result when $\sigma_u^\prime - \sigma_u\leq 0.5$.
+
+By Chebyshev, $Pr[|\sum_{v\in S}z_{u,v}|\geq {k\over 2}]\leq {4\sum_{v\in S}\theta_{u,v}\over k^2}$ 
+
+If $\theta_{u,v}$ is a same constant $\theta$, then $Pr[|\sum_{v\in S}z_{u,v}|\geq{k\over 2}]\leq {4\theta\over k} $
+
+\end{document}
